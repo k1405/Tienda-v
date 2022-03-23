@@ -3,31 +3,34 @@
     <head>
         <title>TechShop</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/css/menu.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <header th:replace="layout/plantilla :: header"/>
         <div class="contenido">
-            <h2>Nuestros Productos</h2>
+            <h1>Listado de articulos</h1>
 
-
-            <div th:if="${articulos != null and !articulos.empty}">
+            <a th:href="@{/nuevoArticulo}">Nuevo articulo</a>
+            <div  th:if="${articulos != null and !articulos.empty}">
                 <table border="1">
                     <thead>
                         <tr>
-                            <th>descripcion</th>
-                            <th>precio</th>
-                            <th>comprar</th>
-
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Existencias</th>
+                            <th>Activo</th>
+                            <th>Eliminar</th>
+                            <th>Modificar</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="articulo : ${articulos}">
                             <td th:text="${articulo.descripcion}"></td>
                             <td th:text="${articulo.precio}"></td>
-
-                            <td> <a th:href="@{/carrito/agregar/} + ${articulo.idArticulo}">agregar</a></td>
+                            <td  th:text="${articulo.existencias}"></td>
+                            <td th:text="${articulo.activo}"></td>
+                            <td> <a th:href="@{/eliminarArticulo/} + ${articulo.idArticulo}">eliminar</a></td>
+                            <td> <a th:href="@{/modicarArticulo/} + ${articulo.idArticulo}">Modificar</a></td>
 
                         </tr>
                     </tbody>

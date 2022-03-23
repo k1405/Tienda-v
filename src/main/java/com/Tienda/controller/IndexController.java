@@ -1,13 +1,13 @@
 package com.Tienda.controller;
 
-import com.Tienda.domain.Cliente;
+import com.Tienda.domain.Articulo;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Arrays;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.Tienda.dao.ClienteDao;
-import com.Tienda.service.ClienteService;
+import com.Tienda.dao.ArticuloDao;
+import com.Tienda.service.ArticuloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -16,42 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class IndexController {
 
     @Autowired
-    private ClienteService clienteService;
+    private ArticuloService articuloService;
 
     @GetMapping("/")
     public String inicio(Model model) {
 
-        var clientes = clienteService.getClientes();
+        var articulos = articuloService.getArticulos(true);
 
-        model.addAttribute("clientes", clientes);
+        model.addAttribute("articulos", articulos);
 
         return "index";
     }
-
-    @GetMapping("/nuevoCliente")
-    public String nuevoCliente(Cliente cliente) {
-
-        return "modificarCliente";
-    }
-
-    @PostMapping("/guardarCliente")
-    public String guardarCliente(Cliente cliente) {
-        clienteService.save(cliente);
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/modicarCliente/{idCliente}")
-    public String modificarCliente(Cliente cliente, Model model) {
-        cliente = clienteService.getCliente(cliente);
-        model.addAttribute("cliente", cliente);
-        return "modificarCliente";
-    }
-
-    @GetMapping("/eliminarCliente/{idCliente}")
-    public String eliminarCliente(Cliente cliente) {
-        clienteService.delete(cliente);
-        return "redirect:/";
-    }
-
 }

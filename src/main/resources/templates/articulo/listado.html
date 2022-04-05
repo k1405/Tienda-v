@@ -1,5 +1,9 @@
 
-<html xmlns:th="http://thymeleaf.org">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org" 
+      xmlns:sec="http://thymeleaft.org/extras/spring-security">
+
     <head>
         <title>TechShop</title>
         <meta charset="UTF-8">
@@ -8,19 +12,19 @@
     <body>
         <header th:replace="layout/plantilla :: header"/>
         <div class="contenido">
-            <h1>Listado de articulos</h1>
+            <h1 th:text="#{articulo.titulo}">Listado de articulos</h1>
 
-            <a th:href="@{/nuevoArticulo}">Nuevo articulo</a>
+            <a th:href="@{/articulo/nuevo}" sec:authorize="hasRole('ROLE_ADMIN')">>Nuevo articulo</a>
             <div  th:if="${articulos != null and !articulos.empty}">
                 <table border="1">
                     <thead>
                         <tr>
-                            <th>Descripcion</th>
-                            <th>Precio</th>
-                            <th>Existencias</th>
-                            <th>Activo</th>
-                            <th>Eliminar</th>
-                            <th>Modificar</th>
+                            <th th:text="#{articulo.descripcion}">Descripcion</th>
+                            <th th:text="#{articulo.precio}">Precio</th>
+                            <th th:text="#{articulo.existencias}">Existencias</th>
+                            <th th:text="#{articulo.activo}">Activo</th>
+                            <th th:text="#{accion.eliminar}" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+                            <th th:text="#{accion.actualizar}" sec:authorize="hasRole('ROLE_ADMIN')">Modificar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,8 +33,8 @@
                             <td th:text="${articulo.precio}"></td>
                             <td  th:text="${articulo.existencias}"></td>
                             <td th:text="${articulo.activo}"></td>
-                            <td> <a th:href="@{/eliminarArticulo/} + ${articulo.idArticulo}">eliminar</a></td>
-                            <td> <a th:href="@{/modicarArticulo/} + ${articulo.idArticulo}">Modificar</a></td>
+                            <td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/articulo/eliminar} + ${articulo.idArticulo}" th:text="#{accion.eliminar}" >eliminar</a></td>
+                            <td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/articulo/modificar} + ${articulo.idArticulo}" th:text="#{accion.actualizar}">Modificar</a></td>
 
                         </tr>
                     </tbody>
@@ -39,7 +43,7 @@
             </div>
 
             <div th:if="${articulos == null or articulos.empty}">
-                no tenemos lista de articulos que mostrar........
+                <p th:text="#{articulo.no_mostrar}"> no tenemos nada para mostrar</p>
             </div> 
         </div> 
         <footer th:replace="layout/plantilla :: footer"/>

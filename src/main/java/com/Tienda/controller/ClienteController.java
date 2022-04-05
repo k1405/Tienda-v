@@ -20,24 +20,19 @@ public class ClienteController {
 
     @GetMapping("/cliente/listado")
     public String inicio(Model model) {
-
         var clientes = clienteService.getClientes();
-
         model.addAttribute("clientes", clientes);
-
         return "/cliente/listado";
     }
 
     @GetMapping("/cliente/nuevo")
     public String nuevoCliente(Cliente cliente) {
-
         return "/cliente/modificar";
     }
 
     @PostMapping("/cliente/guardar")
     public String guardarCliente(Cliente cliente) {
         clienteService.save(cliente);
-
         return "redirect:/cliente/listado";
     }
 

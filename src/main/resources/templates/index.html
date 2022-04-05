@@ -1,44 +1,48 @@
 
-<html xmlns:th="http://thymeleaf.org">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org" 
+      xmlns:sec="http://thymeleaft.org/extras/spring-security">
+
     <head>
         <title>TechShop</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="/css/menu.css" rel="stylesheet" type="text/css"/>
-    </head>
-    <body>
-        <header th:replace="layout/plantilla :: header"/>
-        <div class="contenido">
-            <h2>Nuestros Productos</h2>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="/css/menu.css" rel="stylesheet" type="text/css"/>
+                </head>
+                <body>
+                    <header th:replace="layout/plantilla :: header"/>
+                    <div class="contenido">
+                        <h2 th:text="#{index.titulo}">Nuestros Productos</h2>
 
 
-            <div th:if="${articulos != null and !articulos.empty}">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>descripcion</th>
-                            <th>precio</th>
-                            <th>comprar</th>
+                        <div th:if="${articulos != null and !articulos.empty}">
+                            <table border="1">
+                                <thead>
+                                    <tr>
+                                        <th th:text="#{articulo.descripcion}">descripcion</th>
+                                        <th th:text="#{articulo.precio}">precio</th>
+                                        <th th:text="#{articulo.comprar}">comprar</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="articulo : ${articulos}">
-                            <td th:text="${articulo.descripcion}"></td>
-                            <td th:text="${articulo.precio}"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="articulo : ${articulos}">
+                                        <td th:text="${articulo.descripcion}"></td>
+                                        <td th:text="${articulo.precio}"></td>
 
-                            <td> <a th:href="@{/carrito/agregar/} + ${articulo.idArticulo}">agregar</a></td>
+                                        <td> <a th:href="@{/carrito/agregar/} + ${articulo.idArticulo}" th:text="#{accion.agregar}">agregar</a></td>
 
-                        </tr>
-                    </tbody>
-                </table>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-            </div>
+                        </div>
 
-            <div th:if="${articulos == null or articulos.empty}">
-                no tenemos lista de articulos que mostrar........
-            </div> 
-        </div> 
-        <footer th:replace="layout/plantilla :: footer"/>
-    </body>
-</html>
+                        <div th:if="${articulos == null or articulos.empty}" th:text="#{articulo.no_mostrar}">
+                            no tenemos lista de articulos que mostrar........
+                        </div> 
+                    </div> 
+                    <footer th:replace="layout/plantilla :: footer"/>
+                </body>
+                </html>
